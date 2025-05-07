@@ -9,4 +9,5 @@ public interface ICouponService
     public Task<CouponReponseDTO> CreateCoupon(CouponRequestDTO couponRequestDTO);
     public Task<CouponReponseDTO> UseCoupon(CouponRequestPatchDTO couponCode);
     public Task<CouponReponseDTO> DisableCoupon(string couponCode);
+    public Task<CouponTotalDTO> CalculateTotalCoupon(string userId);
 }
