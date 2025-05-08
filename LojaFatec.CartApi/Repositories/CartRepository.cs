@@ -15,6 +15,26 @@ public class CartRepository : ICartRepository
     {
         _context = context;
     }
+    public async Task<Cart> GetCartByUserId(string userId)
+    {
+        var cartHeader = await _context.CartHeaders.FirstOrDefaultAsync(
+                                     c => c.UserId == userId);
+
+        if (cartHeader == null) return null;
+
+        var cartItems = await _context.CartItems
+                                                .Where(c => c.CartHeaderId == cartHeader.Id)
+                                                .Include(c => c.Product)
+                                                .ToListAsync();
+
+        var cart = new Cart
+        {
+            CartHeader = cartHeader,
+            CartItems = cartItems
+        };
+
+        return cart;
+    }
 
     public async Task<CartHeader> GetCartHeaderByUserIdAsync(string userId)
     {
@@ -77,4 +97,5 @@ public class CartRepository : ICartRepository
         await _context.SaveChangesAsync();
     }
 
+   
 }

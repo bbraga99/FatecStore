@@ -5,6 +5,7 @@ namespace LojaFatec.CartApi.Repositories;
 
 public interface ICartRepository
 {
+    Task<Cart> GetCartByUserId (string userId);
     Task<CartHeader> GetCartHeaderByUserIdAsync(string userId);
     Task<IEnumerable<CartItem>> GetCartItemsByHeaderIdAsync(int headerId);
     Task<CartItem> GetCartItemsAsync(int productId, int headerId);
