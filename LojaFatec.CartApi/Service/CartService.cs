@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Fatec.Store.Cart.Api.DTOs.Mappings;
+using Fatec.Store.Discount.Api.DTOs;
 using LojaFatec.CartApi.DTOs;
 using LojaFatec.CartApi.Models;
 using LojaFatec.CartApi.Repositories;
@@ -112,6 +113,25 @@ namespace LojaFatec.CartApi.Service
             }
 
             return true;
+        }
+
+        public async Task<CartTotalDTO> CalculateCartTotalValue(string userId)
+        {
+            var cartTotal = await _cartRepository.GetCartByUserIdAsync(userId);
+
+            if (cartTotal is null || cartTotal.CartItems == null || !cartTotal.CartItems.A
+                    throw new Exception("Cart empty or not found");
+
+            double total = cartTotal.CartItems.Sum(item => item.Product.Price * item.Quantity);
+
+            double discount = 0;
+
+            //if(!string.IsNullOrEmpty(cartTotal.CartHeader.CouponCode))
+            //{
+                
+            //}
+
+            return null;
         }
     }
 }

@@ -15,7 +15,7 @@ public class CartRepository : ICartRepository
     {
         _context = context;
     }
-    public async Task<Cart> GetCartByUserId(string userId)
+    public async Task<Cart> GetCartByUserIdAsync(string userId)
     {
         var cartHeader = await _context.CartHeaders.FirstOrDefaultAsync(
                                      c => c.UserId == userId);
