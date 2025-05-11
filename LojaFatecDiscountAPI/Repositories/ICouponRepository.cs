@@ -8,5 +8,5 @@ public interface ICouponRepository
     public Task<Coupon> GetCouponByCodeAsync(string couponCode);
     public Task CreateCouponAsync(Coupon coupon);
     public Task UpdateCouponAsync(Coupon coupon);
-    public Task DisableCoupon(string couponCode);
+    public Task ActiveOrInactiveCoupon(string couponCode);
 }

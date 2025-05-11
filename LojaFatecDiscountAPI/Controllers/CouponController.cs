@@ -64,7 +64,7 @@ public class CouponController : ControllerBase
     [HttpPatch("{couponCode}/disable")]
     public async Task<ActionResult<CouponReponseDTO>> Disable(string couponCode)
     {
-        var coupon = await _couponService.DisableCoupon(couponCode);
+        var coupon = await _couponService.ActiveOrInactiveCoupon(couponCode);
 
         return Ok(coupon);
     }

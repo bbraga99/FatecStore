@@ -119,7 +119,7 @@ namespace LojaFatec.CartApi.Service
         {
             var cartTotal = await _cartRepository.GetCartByUserIdAsync(userId);
 
-            if (cartTotal is null || cartTotal.CartItems == null || !cartTotal.CartItems.A
+            if (cartTotal is null || cartTotal.CartItems == null || !cartTotal.CartItems.Any().
                     throw new Exception("Cart empty or not found");
 
             double total = cartTotal.CartItems.Sum(item => item.Product.Price * item.Quantity);
@@ -130,6 +130,8 @@ namespace LojaFatec.CartApi.Service
             //{
                 
             //}
+
+
 
             return null;
         }

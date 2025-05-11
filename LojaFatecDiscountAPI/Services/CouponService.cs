@@ -53,7 +53,7 @@ namespace Fatec.Store.Discount.Api.Services
 
             couponEntity.Quantity--;
 
-            if (couponEntity.Quantity == 0) await _couponRepository.DisableCoupon(couponEntity.CouponCode);
+            if (couponEntity.Quantity == 0) await _couponRepository.ActiveOrInactiveCoupon(couponEntity.CouponCode);
 
             await _couponRepository.UpdateCouponAsync(couponEntity);
 
@@ -76,13 +76,15 @@ namespace Fatec.Store.Discount.Api.Services
             return true;
         }
 
-        public async Task<CouponReponseDTO> DisableCoupon(string couponCode)
+        public async Task<CouponReponseDTO> ActiveOrInactiveCoupon(string couponCode)
         {
-            var coupon = GetCoupon(couponCode).Result;
+            var coupon = await GetCoupon(couponCode);
             
-            await _couponRepository.DisableCoupon(coupon.CouponCode);
+            await _couponRepository.ActiveOrInactiveCoupon(coupon.CouponCode);
 
-            return _mapper.Map<CouponReponseDTO>(coupon);
+            var updatedCoupon = await GetCoupon(couponCode);
+
+            return _mapper.Map<CouponReponseDTO>(updatedCoupon);
         }
     }
 }

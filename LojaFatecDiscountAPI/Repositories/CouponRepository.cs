@@ -47,11 +47,12 @@ public class CouponRepository : ICouponRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task DisableCoupon(string couponCode)
+    public async Task ActiveOrInactiveCoupon(string couponCode)
     {
         var coupon = await GetCouponByCodeAsync(couponCode);
 
-            coupon.Active = !coupon.Active;
-            await _context.SaveChangesAsync(); 
+        coupon.Active = !coupon.Active;
+
+        await _context.SaveChangesAsync(); 
     }
 }
