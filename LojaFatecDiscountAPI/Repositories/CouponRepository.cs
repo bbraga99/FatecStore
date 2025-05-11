@@ -51,11 +51,7 @@ public class CouponRepository : ICouponRepository
     {
         var coupon = await GetCouponByCodeAsync(couponCode);
 
-        if(coupon != null && coupon.Quantity <= 0)
-        {
-            coupon.Active = false;
-            await _context.SaveChangesAsync();
-        }
+            coupon.Active = !coupon.Active;
+            await _context.SaveChangesAsync(); 
     }
-
 }

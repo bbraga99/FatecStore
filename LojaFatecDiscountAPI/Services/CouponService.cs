@@ -45,15 +45,11 @@ namespace Fatec.Store.Discount.Api.Services
 
         public async Task<CouponReponseDTO> UseCoupon(CouponRequestPatchDTO couponCode)
         {
-            var couponEntity = await _couponRepository.GetCouponByCodeAsync(couponCode.CouponCode);
+            var couponEntity = await _couponRepository.GetCouponByCodeAsync(couponCode.CouponCode) ?? throw new Exception("CoupounNotFound");
 
-            var couponEntityFind = couponEntity.CouponCode;
-
-            if (couponEntity is null) throw new Exception("Coupon don't find");
-
-            if (couponEntity.Active == false) throw new Exception("Coupon inactive");
-
-            if (couponEntity.Quantity <= 0) throw new Exception("Coupon not avaible");
+            if (couponEntity.Active == false) throw new Exception("CouponInactive");
+            
+            await ApplyCouponAsync(couponCode.userId, couponCode.CouponCode);
 
             couponEntity.Quantity--;
 
@@ -66,7 +62,7 @@ namespace Fatec.Store.Discount.Api.Services
         public async Task<bool> ApplyCouponAsync(string userId, string couponCode)
         {
             if (await _userCouponRepository.HasUserUsedCouponAsync(userId, couponCode))
-                throw new Exception("Coupon already used");
+                throw new Exception("AlreadyUsed");
 
             var userCoupon = new UserCoupon
             {
@@ -83,7 +79,7 @@ namespace Fatec.Store.Discount.Api.Services
         public async Task<CouponReponseDTO> DisableCoupon(string couponCode)
         {
             var coupon = GetCoupon(couponCode).Result;
-
+            
             await _couponRepository.DisableCoupon(coupon.CouponCode);
 
             return _mapper.Map<CouponReponseDTO>(coupon);

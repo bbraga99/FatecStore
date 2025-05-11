@@ -43,12 +43,25 @@ public class CouponController : ControllerBase
     [HttpPatch]
     public async Task<ActionResult<CouponReponseDTO>> UseCoupon(CouponRequestPatchDTO couponCode)
     {
-        var usedCupom = await _couponService.UseCoupon(couponCode);
+        try
+        {
+            var usedCupom = await _couponService.UseCoupon(couponCode);
 
-        return Ok(usedCupom);
+            return Ok(usedCupom);
+        }
+        catch(Exception e)
+        {
+            return e.Message switch
+            {
+                "CoupounNotFound" => (ActionResult<CouponReponseDTO>)BadRequest("Cupom não encontrado"),
+                "AlreadyUsed" => (ActionResult<CouponReponseDTO>)BadRequest("Cupom já usado"),
+                "CouponInactive" => (ActionResult<CouponReponseDTO>)BadRequest("Cupom inativo"),
+                _ => (ActionResult<CouponReponseDTO>)StatusCode(500),
+            };
+        }
     }
 
-    [HttpDelete]
+    [HttpPatch("{couponCode}/disable")]
     public async Task<ActionResult<CouponReponseDTO>> Disable(string couponCode)
     {
         var coupon = await _couponService.DisableCoupon(couponCode);
