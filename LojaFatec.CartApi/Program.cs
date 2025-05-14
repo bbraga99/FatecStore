@@ -22,6 +22,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IDiscountServiceClient, DiscountServiceClient>();
+builder.Services.AddScoped<IProcutServiceClient, ProductServiceClient>();
 builder.Services.AddHttpClient();
 
 var app = builder.Build();

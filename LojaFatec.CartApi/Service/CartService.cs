@@ -48,6 +48,7 @@ namespace LojaFatec.CartApi.Service
             var cart = _mapper.Map<Cart>(cartRequestDTO);
 
             var itemToAdd = cart.CartItems.First();
+            //var product = await _productServiceClient.GetProduct(itemToAdd.ProductId);
             var product = await _cartRepository.GetProductByIdAsync(itemToAdd.ProductId);
             if(product is null)
             {
