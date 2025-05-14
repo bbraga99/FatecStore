@@ -63,50 +63,10 @@ namespace LojaFatec.CartApi.Service
 
             return _mapper.Map<CartResponseDTO>(updatedCart);
         }
+
         public async Task<CartResponseDTO> UpdateCartAsync(CartRequestDTO cartRequestDTO)
         {
-            var cart = _mapper.Map<Cart>(cartRequestDTO);
-
-            var itemToAdd = cart.CartItems.First();
-            var product = await _cartRepository.GetProductByIdAsync(itemToAdd.ProductId);
-            if(product == null)
-            {
-                await _cartRepository.AddProductAsync(itemToAdd.Product);
-            }
-
-            var cartHeader = await _cartRepository.GetCartHeaderByUserIdAsync(cart.CartHeader.UserId);
-            if (cartHeader == null)
-            {
-                await _cartRepository.AddCartHeaderAsync(cart.CartHeader);
-
-                itemToAdd.CartHeaderId = cart.CartHeader.Id;
-                itemToAdd.Product = null;
-
-                await _cartRepository.AddCartItemAsync(itemToAdd);
-            }
-            else
-            {
-                var existingItem = await _cartRepository.GetCartItemsAsync(itemToAdd.ProductId, cartHeader.Id);
-
-                if (existingItem == null)
-                {
-                    itemToAdd.CartHeaderId = cartHeader.Id;
-                    itemToAdd.Product = null;
-
-                    await _cartRepository.AddCartItemAsync(itemToAdd);
-                }
-                else
-                {
-                    itemToAdd.Id = existingItem.Id;
-                    itemToAdd.Quantity += existingItem.Quantity;
-                    itemToAdd.CartHeaderId = cartHeader.Id;
-                    itemToAdd.Product = null;
-
-                    await _cartRepository.UpdateCartItemAsync(itemToAdd);
-                }
-            }
-
-            return await GetCartByUserID(cart.CartHeader.UserId);
+           
         }
 
         public async Task<bool> CleanCartAsync(string userId)
@@ -145,26 +105,26 @@ namespace LojaFatec.CartApi.Service
             return true;
         }
 
-        
-         //public async Task<CartTotalDTO> CalculateCartTotalValue(string userId)
-         //{
-         //    var cartTotal = await _cartRepository.GetCartByUserIdAsync(userId);
+      
+        //public async Task<CartTotalDTO> CalculateCartTotalValue(string userId)
+        //{
+        //    var cartTotal = await _cartRepository.GetCartByUserIdAsync(userId);
 
-         //    if (cartTotal is null || cartTotal.CartItems == null || !cartTotal.CartItems.Any().
-         //            throw new Exception("Cart empty or not found");
+        //    if (cartTotal is null || cartTotal.CartItems == null || !cartTotal.CartItems.Any().
+        //            throw new Exception("Cart empty or not found");
 
-         //    double total = cartTotal.CartItems.Sum(item => item.Product.Price * item.Quantity);
+        //    double total = cartTotal.CartItems.Sum(item => item.Product.Price * item.Quantity);
 
-         //    double discount = 0;
+        //    double discount = 0;
 
-         //    //if(!string.IsNullOrEmpty(cartTotal.CartHeader.CouponCode))
-         //    //{
+        //    //if(!string.IsNullOrEmpty(cartTotal.CartHeader.CouponCode))
+        //    //{
 
-         //    //}
+        //    //}
 
 
 
-         //    return null;
-         //} 
+        //    return null;
+        //} 
     }
 }

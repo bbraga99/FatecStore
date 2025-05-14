@@ -25,9 +25,9 @@ public class CartController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<CartResponseDTO>> UpdateCart([FromBody] CartRequestDTO cartRequestDTO)
+    public async Task<ActionResult<CartResponseDTO>> CreateCartAsync([FromBody] CartRequestDTO cartRequestDTO)
     {
-        var updatedCart = await _cartService.UpdateCartAsync(cartRequestDTO);
+        var updatedCart = await _cartService.CreateCartAsync(cartRequestDTO);
 
         return Ok(updatedCart);
     }
