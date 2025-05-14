@@ -12,17 +12,17 @@ namespace LojaFatec.CartApi.Service
         private readonly IMapper _mapper;
         private readonly ICartRepository _cartRepository;
         private readonly IDiscountServiceClient _discountServiceClient;
-        private readonly IProcutServiceClient _procutServiceClient;
+        private readonly IProcutServiceClient _productServiceClient;
 
         public CartService(IMapper mapper, 
-                           ICartRepository cartRepository,
+                           ICartRepository cartRepository, 
                            IDiscountServiceClient discountServiceClient,
-                           IProcutServiceClient procutServiceClient)
+                           IProcutServiceClient productServiceClient)
         {
             _mapper = mapper;
             _cartRepository = cartRepository;
             _discountServiceClient = discountServiceClient;
-            _procutServiceClient = procutServiceClient;
+            _productServiceClient = productServiceClient;
         }
         public async Task<CartResponseDTO> GetCartByUserID(string id)
         {
