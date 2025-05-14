@@ -38,6 +38,31 @@ namespace LojaFatec.CartApi.Service
             return _mapper.Map<CartResponseDTO>(cart);
 
         }
+
+        public async Task<CartResponseDTO> CreateCartAsync(CartRequestDTO cartRequestDTO)
+        {
+            var cart = _mapper.Map<Cart>(cartRequestDTO);
+
+            var itemToAdd = cart.CartItems.First();
+            var product = await _cartRepository.GetProductByIdAsync(itemToAdd.ProductId);
+            if(product is null)
+            {
+                await _cartRepository.AddProductAsync(itemToAdd.Product);
+            }
+
+            await _cartRepository.AddCartHeaderAsync(cart.CartHeader);
+
+            var savedHeader = await _cartRepository.GetCartHeaderByUserIdAsync(cart.CartHeader.UserId);
+
+            itemToAdd.CartHeaderId = savedHeader.Id;
+            itemToAdd.Product = null;
+
+            await _cartRepository.AddCartItemAsync(itemToAdd);
+
+            var updatedCart = await GetCartByUserID(savedHeader.UserId);
+
+            return _mapper.Map<CartResponseDTO>(updatedCart);
+        }
         public async Task<CartResponseDTO> UpdateCartAsync(CartRequestDTO cartRequestDTO)
         {
             var cart = _mapper.Map<Cart>(cartRequestDTO);

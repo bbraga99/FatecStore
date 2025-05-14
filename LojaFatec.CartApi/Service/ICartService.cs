@@ -9,7 +9,7 @@ public interface ICartService
     public Task<CartResponseDTO> GetCartByUserID(string id);
     public Task<CartResponseDTO> UpdateCartAsync(CartRequestDTO cartRequestDTO);
 
-    //criar metodo createCart e tirar a responsabilidade deo updatecart
+    public Task<CartRequestDTO> CreateCartAsync(CartRequestDTO cartRequestDTO);
     public Task<bool> DeleteItemAsync(int productId, int headerId);
     public Task<bool> CleanCartAsync(string userId);
 
