@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Fatec.Store.Cart.Api.DTOs.Mappings;
+using Fatec.Store.Cart.Api.ServicesClient;
 using Fatec.Store.Discount.Api.DTOs;
 using LojaFatec.CartApi.DTOs;
 using LojaFatec.CartApi.Models;
@@ -11,14 +12,17 @@ namespace LojaFatec.CartApi.Service
     {
         private readonly IMapper _mapper;
         private readonly ICartRepository _cartRepository;
+        private readonly IDiscountServiceClient _discountServiceClient;
 
-        public CartService(IMapper mapper, ICartRepository cartRepository)
+        public CartService(IMapper mapper, ICartRepository cartRepository, IDiscountServiceClient discountServiceClient)
         {
             _mapper = mapper;
             _cartRepository = cartRepository;
+            _discountServiceClient = discountServiceClient;
         }
         public async Task<CartResponseDTO> GetCartByUserID(string id)
         {
+           
             var header = await _cartRepository.GetCartHeaderByUserIdAsync(id);
 
             if (header == null) throw new Exception("Cart don't find");
@@ -32,6 +36,7 @@ namespace LojaFatec.CartApi.Service
             };
 
             return _mapper.Map<CartResponseDTO>(cart);
+
         }
         public async Task<CartResponseDTO> UpdateCartAsync(CartRequestDTO cartRequestDTO)
         {
@@ -115,25 +120,26 @@ namespace LojaFatec.CartApi.Service
             return true;
         }
 
-        public async Task<CartTotalDTO> CalculateCartTotalValue(string userId)
-        {
-            var cartTotal = await _cartRepository.GetCartByUserIdAsync(userId);
+        
+         //public async Task<CartTotalDTO> CalculateCartTotalValue(string userId)
+         //{
+         //    var cartTotal = await _cartRepository.GetCartByUserIdAsync(userId);
 
-            if (cartTotal is null || cartTotal.CartItems == null || !cartTotal.CartItems.Any().
-                    throw new Exception("Cart empty or not found");
+         //    if (cartTotal is null || cartTotal.CartItems == null || !cartTotal.CartItems.Any().
+         //            throw new Exception("Cart empty or not found");
 
-            double total = cartTotal.CartItems.Sum(item => item.Product.Price * item.Quantity);
+         //    double total = cartTotal.CartItems.Sum(item => item.Product.Price * item.Quantity);
 
-            double discount = 0;
+         //    double discount = 0;
 
-            //if(!string.IsNullOrEmpty(cartTotal.CartHeader.CouponCode))
-            //{
-                
-            //}
+         //    //if(!string.IsNullOrEmpty(cartTotal.CartHeader.CouponCode))
+         //    //{
+
+         //    //}
 
 
 
-            return null;
-        }
+         //    return null;
+         //} 
     }
 }

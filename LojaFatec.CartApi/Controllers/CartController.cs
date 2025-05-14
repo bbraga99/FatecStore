@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LojaFatec.CartApi.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/cart")]
 [ApiController]
 public class CartController : ControllerBase
 {

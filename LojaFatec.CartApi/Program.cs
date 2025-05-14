@@ -1,3 +1,4 @@
+using Fatec.Store.Cart.Api.ServicesClient;
 using LojaFatec.CartApi.Context;
 using LojaFatec.CartApi.Repositories;
 using LojaFatec.CartApi.Service;
@@ -20,6 +21,8 @@ builder.Services.AddDbContext<AppDbContext>(
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IDiscountServiceClient, DiscountServiceClient>();
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
