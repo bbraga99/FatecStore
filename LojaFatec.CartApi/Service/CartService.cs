@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Fatec.Store.Cart.Api.DTOs.Mappings;
 using Fatec.Store.Cart.Api.ServicesClient;
-using Fatec.Store.Discount.Api.DTOs;
 using LojaFatec.CartApi.DTOs;
 using LojaFatec.CartApi.Models;
 using LojaFatec.CartApi.Repositories;
@@ -64,9 +63,45 @@ namespace LojaFatec.CartApi.Service
             return _mapper.Map<CartResponseDTO>(updatedCart);
         }
 
-        public async Task<CartResponseDTO> UpdateCartAsync(CartRequestDTO cartRequestDTO)
+        public async Task<CartResponseDTO> UpdateCartAsync(string cartId, CartRequestDTO cartRequestDTO)
         {
-           
+            var cart = _mapper.Map<Cart>(cartRequestDTO);
+
+            var itemToAdd = cart.CartItems.First();
+      
+            var product = await _cartRepository.GetProductByIdAsync(itemToAdd.ProductId);
+            if (product == null)
+            {
+                await _cartRepository.AddProductAsync(itemToAdd.Product);
+            }
+
+            var cartHeader = await _cartRepository.GetCartHeaderByUserIdAsync(cart.CartHeader.UserId);
+
+            if (cartHeader == null)
+            {
+                throw new InvalidOperationException("Cart don't find");
+            }
+
+            var existingItem = await _cartRepository.GetCartItemsAsync(itemToAdd.ProductId, cartHeader.Id);
+
+            if (existingItem == null)
+            {
+                itemToAdd.CartHeaderId = cartHeader.Id;
+                itemToAdd.Product = null;
+
+                await _cartRepository.AddCartItemAsync(itemToAdd);
+            }
+            else
+            {
+                itemToAdd.Id = existingItem.Id;
+                itemToAdd.Quantity += existingItem.Quantity;
+                itemToAdd.CartHeaderId = cartHeader.Id;
+                itemToAdd.Product = null;
+
+                await _cartRepository.UpdateCartItemAsync(itemToAdd);
+            }
+
+            return _mapper.Map<CartResponseDTO>(cart);
         }
 
         public async Task<bool> CleanCartAsync(string userId)

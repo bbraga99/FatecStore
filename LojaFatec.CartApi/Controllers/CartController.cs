@@ -32,6 +32,13 @@ public class CartController : ControllerBase
         return Ok(updatedCart);
     }
 
+    [HttpPut]
+    public async Task<ActionResult<CartResponseDTO>> UpdateCart(string cartId, [FromBody] CartRequestDTO cartRequestDTO)
+    {
+        var result = await _cartService.UpdateCartAsync(cartId,cartRequestDTO);
+        return Ok(result);
+    }
+
     [HttpDelete("{itemId}")]
     public async Task<ActionResult> DeleteItem(int itemId, int headerId)
     {
