@@ -10,8 +10,7 @@ namespace Fatec.Store.Carts.Api.Mappings
         public CartProfile()
         {
             #region CreateCart
-            CreateMap<CreateCartRequest, Cart>(MemberList.None)
-                .ForMember(dest => dest.Products, opt => opt.MapFrom(src => new List<Product>()));
+            CreateMap<CreateCartRequest, Cart>(MemberList.None);
 
             CreateMap<CartProductItem, Product>(MemberList.None);
 
