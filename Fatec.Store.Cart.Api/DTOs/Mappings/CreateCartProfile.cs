@@ -9,6 +9,10 @@ namespace Fatec.Store.Carts.Api.DTOs.Mappings
         public CreateCartProfile()
         {
             CreateMap<CreateCartRequestDTO, Cart>();
+
+            CreateMap<CartHeaderRequestDTO, CartHeader>();
+
+            CreateMap<CartItemRequestDTO, CartItem>();
         }
     }
 }

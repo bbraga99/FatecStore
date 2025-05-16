@@ -14,8 +14,8 @@ namespace Fatec.Store.Carts.Api.Service
         private readonly IDiscountServiceClient _discountServiceClient;
         private readonly IProcutServiceClient _productServiceClient;
 
-        public CartService(IMapper mapper, 
-                           ICartRepository cartRepository, 
+        public CartService(IMapper mapper,
+                           ICartRepository cartRepository,
                            IDiscountServiceClient discountServiceClient,
                            IProcutServiceClient productServiceClient)
         {
@@ -26,7 +26,7 @@ namespace Fatec.Store.Carts.Api.Service
         }
         public async Task<CartResponseDTO> GetCartByUserID(string id)
         {
-           
+
             var header = await _cartRepository.GetCartHeaderByUserIdAsync(id);
 
             if (header == null) throw new Exception("Cart don't find");
@@ -45,29 +45,38 @@ namespace Fatec.Store.Carts.Api.Service
 
         public async Task<CartResponseDTO> CreateCartAsync(CreateCartRequestDTO cartRequestDTO)
         {
-            var cart = _mapper.Map<Cart>(cartRequestDTO);
+            var cart = await _cartRepository.GetCartByUserIdAsync(cartRequestDTO.CartHeader.UserId.ToString());
 
-            var itemToAdd = cart.CartItems.First();
-            //var product = await _productServiceClient.GetProduct(itemToAdd.ProductId);
-            var product = await _cartRepository.GetProductByIdAsync(itemToAdd.ProductId);
-
-            if(product is null)
+            if(cart is null)
             {
-                await _cartRepository.AddProductAsync(itemToAdd.Product);
+                cart = _mapper.Map<Cart>(cartRequestDTO);
+                await _cartRepository.AddCartHeaderAsync(cart.CartHeader);
             }
 
-            await _cartRepository.AddCartHeaderAsync(cart.CartHeader);
 
-            var savedHeader = await _cartRepository.GetCartHeaderByUserIdAsync(cart.CartHeader.UserId);
+            //var 
 
-            itemToAdd.CartHeaderId = savedHeader.Id;
-            itemToAdd.Product = null;
+            //var itemToAdd = cart.CartItems.First();
+            ////var product = await _productServiceClient.GetProduct(itemToAdd.ProductId);
+            //var product = await _cartRepository.GetProductByIdAsync(itemToAdd.ProductId);
 
-            await _cartRepository.AddCartItemAsync(itemToAdd);
+            //if(product is null)
+            //{
+            //    await _cartRepository.AddProductAsync(itemToAdd.Product);
+            //}
 
-            var updatedCart = await GetCartByUserID(savedHeader.UserId);
+            //await _cartRepository.AddCartHeaderAsync(cart.CartHeader);
 
-            return _mapper.Map<CartResponseDTO>(updatedCart);
+            //var savedHeader = await _cartRepository.GetCartHeaderByUserIdAsync(cart.CartHeader.UserId);
+
+            //itemToAdd.CartHeaderId = savedHeader.Id;
+            //itemToAdd.Product = null;
+
+            //await _cartRepository.AddCartItemAsync(itemToAdd);
+
+            //var updatedCart = await GetCartByUserID(savedHeader.UserId);
+
+            return new();
         }
 
         public async Task<CartResponseDTO> UpdateCartAsync(string cartId, CartRequestDTO cartRequestDTO)
@@ -75,7 +84,7 @@ namespace Fatec.Store.Carts.Api.Service
             var cart = _mapper.Map<Cart>(cartRequestDTO);
 
             var itemToAdd = cart.CartItems.First();
-      
+
             var product = await _cartRepository.GetProductByIdAsync(itemToAdd.ProductId);
             if (product == null)
             {
@@ -138,7 +147,7 @@ namespace Fatec.Store.Carts.Api.Service
             int total = (await _cartRepository.GetCartItemsByHeaderIdAsync(item.CartHeaderId)).Count();
             await _cartRepository.RemoveCartItemAsync(item);
 
-            if(total == 1)
+            if (total == 1)
             {
                 var header = await _cartRepository.GetCartHeaderByUserIdAsync(item.CartHeader.UserId);
                 if (header != null) await _cartRepository.RemoveCartHeaderAsync(header);
@@ -147,7 +156,7 @@ namespace Fatec.Store.Carts.Api.Service
             return true;
         }
 
-      
+
         //public async Task<CartTotalDTO> CalculateCartTotalValue(string userId)
         //{
         //    var cartTotal = await _cartRepository.GetCartByUserIdAsync(userId);

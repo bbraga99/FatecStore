@@ -1,34 +1,12 @@
-﻿using Fatec.Store.Carts.Api.Models;
+﻿using Fatec.Store.Carts.Api.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fatec.Store.Carts.Api.Context;
-
-public class AppDbContext : DbContext
+namespace Fatec.Store.Carts.Api.Context
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-
-    public DbSet<Product>? Products { get; set; }
-    public DbSet<CartItem> CartItems { get; set; }
-    public DbSet<CartHeader> CartHeaders { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder mb)
+    public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
     {
-        mb.Entity<Product>().HasKey(c  => c.Id);    
+        public DbSet<Cart> Carts { get; set; }
 
-        mb.Entity<Product>().Property(c => c.Id).ValueGeneratedNever();
-
-        mb.Entity<Product>().Property(c => c.Name).HasMaxLength(100).IsRequired();
-
-        mb.Entity<Product>().Property(c => c.Description).HasMaxLength(255).IsRequired();
-
-        mb.Entity<Product>().Property(c => c.ImageURL).HasMaxLength(255).IsRequired();
-
-        mb.Entity<Product>().Property(c => c.CategoryName).HasMaxLength(255).IsRequired();
-
-        mb.Entity<Product>().Property(c => c.Price).HasPrecision(12, 2);
-
-        mb.Entity<CartHeader>().Property(c => c.UserId).HasMaxLength(255).IsRequired();
-
-        mb.Entity<CartHeader>().Property(c => c.CouponCode).HasMaxLength(100);
+        public DbSet<Product> Products { get; set; }
     }
 }
