@@ -24,7 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\UpdateCart\" />
+    <Folder Include="Models\DTOs\UpdateCart\" />
+    <Folder Include="Models\ServicesClients\" />
     <Folder Include="ServiceClients\" />
   </ItemGroup>
 

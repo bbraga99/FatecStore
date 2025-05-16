@@ -2,8 +2,8 @@
 using Fatec.Store.Carts.Api.Domain.Entities;
 using Fatec.Store.Carts.Api.Domain.Interfaces.Repositories;
 using Fatec.Store.Carts.Api.Domain.Interfaces.Services;
-using Fatec.Store.Carts.Api.Models.CreateCart;
-using Fatec.Store.Carts.Api.Models.GetCartByUserId;
+using Fatec.Store.Carts.Api.Models.DTO.CreateCart;
+using Fatec.Store.Carts.Api.Models.DTO.GetCartByUserId;
 
 namespace Fatec.Store.Carts.Api.Services
 {
