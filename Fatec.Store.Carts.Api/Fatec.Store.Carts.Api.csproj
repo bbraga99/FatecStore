@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Models\UpdateCart\" />
+    <Folder Include="ServiceClients\" />
   </ItemGroup>
 
 </Project>
