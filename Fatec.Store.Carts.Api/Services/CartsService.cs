@@ -3,6 +3,7 @@ using Fatec.Store.Carts.Api.Domain.Entities;
 using Fatec.Store.Carts.Api.Domain.Interfaces.Repositories;
 using Fatec.Store.Carts.Api.Domain.Interfaces.Services;
 using Fatec.Store.Carts.Api.Models.CreateCart;
+using Fatec.Store.Carts.Api.Models.GetCartByUserId;
 
 namespace Fatec.Store.Carts.Api.Services
 {
@@ -27,6 +28,16 @@ namespace Fatec.Store.Carts.Api.Services
                 cart.CalculateTotalAmount();
                 await _cartsRepository.CreateCartAsync(cart);
             }
+        }
+
+        public async Task<GetCartByUserIdResponse> GetCartByUserIdAsync(GetCartByUserIdRequest request)
+        {
+            var cart = await _cartsRepository.GetCartByUserIdAsync(request.UserId)
+                ?? throw new Exception("NotFound");
+
+            var response = _mapper.Map<GetCartByUserIdResponse>(cart);
+
+            return response;
         }
     }
 }
