@@ -1,4 +1,4 @@
-﻿namespace Fatec.Store.Carts.Api.Models.DTO.GetCartByUserId
+﻿namespace Fatec.Store.Carts.Api.Models.DTOs.GetCartByUserId
 {
     public class GetCartByUserIdResponse
     {
