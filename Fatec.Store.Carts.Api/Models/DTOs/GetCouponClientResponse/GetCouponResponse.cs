@@ -3,5 +3,6 @@
 public class GetCouponResponse
 {
     public string? CouponCode { get; set; }
+
     public decimal Discount { get; set; }
 }

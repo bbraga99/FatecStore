@@ -9,6 +9,12 @@ namespace Fatec.Store.Carts.Api.Repository
     {
         private readonly AppDbContext _context = context;
 
+        public async Task CleanCartAsync(IEnumerable<Product> products)
+        {
+            _context.Products.RemoveRange(products);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task CreateCartAsync(Cart cart)
         {
             await _context.AddAsync(cart);
@@ -30,5 +36,7 @@ namespace Fatec.Store.Carts.Api.Repository
             _context.Update(cart);
             await _context.SaveChangesAsync();
         }
+
+
     }
 }

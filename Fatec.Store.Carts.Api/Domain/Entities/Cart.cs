@@ -1,4 +1,5 @@
-﻿namespace Fatec.Store.Carts.Api.Domain.Entities
+﻿
+namespace Fatec.Store.Carts.Api.Domain.Entities
 {
     public class Cart
     {
@@ -14,9 +15,12 @@
 
         public IEnumerable<Product> Products { get; set; }
 
-        public void CalculateTotals()
-        {
+        public void CalculateTotalAmount() =>
             TotalAmount = Products?.Sum(product => product?.Price * product?.Quantity) ?? decimal.Zero;
+
+        internal void RemoveCouponDiscount()
+        {
+            CouponCode = string.Empty;
             TotalDiscount = decimal.Zero;
         }
     }

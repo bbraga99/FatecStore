@@ -12,5 +12,6 @@ namespace Fatec.Store.Carts.Api.Domain.Interfaces.Repositories
 
         Task<Cart> GetCartByIdAsync(int cartId);
 
+        Task CleanCartAsync(IEnumerable<Product> products);
     }
 }

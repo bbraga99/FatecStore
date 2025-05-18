@@ -3,9 +3,10 @@ using Fatec.Store.Carts.Api.Domain.Interfaces.HttpClient;
 using Fatec.Store.Carts.Api.Domain.Interfaces.Repositories;
 using Fatec.Store.Carts.Api.Domain.Interfaces.Services;
 using Fatec.Store.Carts.Api.Mappings;
-using Fatec.Store.Carts.Api.Models.ServicesClient;
 using Fatec.Store.Carts.Api.Repository;
+using Fatec.Store.Carts.Api.ServiceClient;
 using Fatec.Store.Carts.Api.Services;
+using Fatec.Store.Carts.Api.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

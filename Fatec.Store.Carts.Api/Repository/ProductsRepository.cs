@@ -15,9 +15,13 @@ namespace Fatec.Store.Carts.Api.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task RemoveProductsAsync(IEnumerable<Product> products)
+        public async Task<Product?> GetProductByProductIdAndCartIdAsync(int productId, int cartId) =>
+            await _context.Products.FirstOrDefaultAsync(product =>
+                product.ProductId.Equals(productId) && product.CartId.Equals(cartId));
+
+        public async Task RemoveProductAsync(Product product)
         {
-            _context.Products.RemoveRange();
+            _context.Products.Remove(product);
             await _context.SaveChangesAsync();
         }
 

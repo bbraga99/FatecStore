@@ -62,6 +62,66 @@ namespace Fatec.Store.Carts.Api.Controllers
             }
         }
 
+        [HttpDelete("{cartId}/products/{productId}")]
+        public async Task<IActionResult> RemoveProductFromCartAsync([FromRoute] int cartId, [FromRoute] int productId)
+        {
+            try
+            {
+                await _cartService.RemoveProductFromCartAsync(cartId, productId);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return GetActionResult(e, "Produto");
+            }
+        }
+
+        [HttpDelete("{cartId}/clean")]
+        public async Task<IActionResult> CleanCartAsync([FromRoute] int cartId)
+        {
+            try
+            {
+                await _cartService.CleanCartAsync(cartId);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return GetActionResult(e, "Produto");
+            }
+        }
+
+        [HttpPost("{cartId}/coupon/{couponCode}")]
+        public async Task<IActionResult> ApplyCouponDiscountAsync([FromRoute] int cartId, [FromRoute] string couponCode)
+        {
+            try
+            {
+                await _cartService.ApplyCouponDiscountAsync(cartId, couponCode);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return GetActionResult(e, "Carrinho e/ou cupom");
+            }
+        }
+
+        [HttpDelete("{cartId}/coupon")]
+        public async Task<IActionResult> RemoveCouponDiscountAsync([FromRoute] int cartId)
+        {
+            try
+            {
+                await _cartService.RemoveCouponDiscountAsync(cartId);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return GetActionResult(e, "Carrinho");
+            }
+        }
+
         private IActionResult GetActionResult(Exception ex, string context) => ex.Message switch
         {
             "NotFound" => NotFound($"{context} não encontrado"),
