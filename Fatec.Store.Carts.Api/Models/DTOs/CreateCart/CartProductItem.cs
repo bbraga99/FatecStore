@@ -1,4 +1,4 @@
-﻿namespace Fatec.Store.Carts.Api.Models.DTO.CreateCart
+﻿namespace Fatec.Store.Carts.Api.Models.DTOs.CreateCart
 {
     public class CartProductItem
     {

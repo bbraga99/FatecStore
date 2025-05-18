@@ -10,6 +10,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\ServicesClients\**" />
+    <Compile Remove="ServiceClients\**" />
+    <Content Remove="Models\ServicesClients\**" />
+    <Content Remove="ServiceClients\**" />
+    <EmbeddedResource Remove="Models\ServicesClients\**" />
+    <EmbeddedResource Remove="ServiceClients\**" />
+    <None Remove="Models\ServicesClients\**" />
+    <None Remove="ServiceClients\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4">
@@ -28,8 +39,6 @@
 
   <ItemGroup>
     <Folder Include="Models\DTOs\UpdateCart\" />
-    <Folder Include="Models\ServicesClients\" />
-    <Folder Include="ServiceClients\" />
   </ItemGroup>
 
 </Project>

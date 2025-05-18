@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Fatec.Store.Carts.Api.Domain.Entities;
-using Fatec.Store.Carts.Api.Models.DTO.CreateCart;
-using Fatec.Store.Carts.Api.Models.DTO.GetCartByUserId;
+using Fatec.Store.Carts.Api.Models.DTOs.CreateCart;
+using Fatec.Store.Carts.Api.Models.DTOs.GetCartByUserId;
 
 namespace Fatec.Store.Carts.Api.Mappings
 {
