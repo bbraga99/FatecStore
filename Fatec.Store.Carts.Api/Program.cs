@@ -1,7 +1,9 @@
 using Fatec.Store.Carts.Api.Context;
+using Fatec.Store.Carts.Api.Domain.Interfaces.HttpClient;
 using Fatec.Store.Carts.Api.Domain.Interfaces.Repositories;
 using Fatec.Store.Carts.Api.Domain.Interfaces.Services;
 using Fatec.Store.Carts.Api.Mappings;
+using Fatec.Store.Carts.Api.Models.ServicesClient;
 using Fatec.Store.Carts.Api.Repository;
 using Fatec.Store.Carts.Api.Services;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +20,8 @@ builder.Services.AddDbContext<AppDbContext>(
 
 builder.Services.AddScoped<ICartsService, CartsService>();
 builder.Services.AddScoped<ICartsRepository, CartsRepository>();
+builder.Services.AddScoped<IDiscountServiceClient, DiscountServiceClient>();
+builder.Services.AddHttpClient();
 
 builder.Services.AddAutoMapper(typeof(CartProfile).Assembly);
 

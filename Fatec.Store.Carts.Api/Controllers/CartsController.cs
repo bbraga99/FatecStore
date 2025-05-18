@@ -1,6 +1,6 @@
 ﻿using Fatec.Store.Carts.Api.Domain.Interfaces.Services;
-using Fatec.Store.Carts.Api.Models.DTO.CreateCart;
-using Fatec.Store.Carts.Api.Models.GetCartByUserId;
+using Fatec.Store.Carts.Api.Models.DTOs.CreateCart;
+using Fatec.Store.Carts.Api.Models.DTOs.GetCartByUserId;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fatec.Store.Carts.Api.Controllers
