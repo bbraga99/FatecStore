@@ -1,6 +1,7 @@
 ﻿using Fatec.Store.Carts.Api.Domain.Interfaces.Services;
-using Fatec.Store.Carts.Api.Models.DTO.CreateCart;
-using Fatec.Store.Carts.Api.Models.DTO.GetCartByUserId;
+using Fatec.Store.Carts.Api.Models.DTOs.AddProductCart;
+using Fatec.Store.Carts.Api.Models.DTOs.CreateCart;
+using Fatec.Store.Carts.Api.Models.DTOs.GetCartByUserId;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fatec.Store.Carts.Api.Controllers
@@ -46,16 +47,25 @@ namespace Fatec.Store.Carts.Api.Controllers
             }
         }
 
-        [HttpPut("{cartId}")]
-        public async Task<IActionResult> UpdateCartAsync(object productList)
+        [HttpPost("{cartId}/products")]
+        public async Task<IActionResult> AddProductCartAsync([FromRoute] int cartId, AddProductCartRequest cartProduct)
         {
-            return Ok();
+            try
+            {
+                var response = await _cartService.AddProductCartAsync(cartId, cartProduct);
+
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                return GetActionResult(e, "Carrinho");
+            }
         }
 
         private IActionResult GetActionResult(Exception ex, string context) => ex.Message switch
         {
             "NotFound" => NotFound($"{context} não encontrado"),
-            "BadRequest" => BadRequest($"{context} não inválido"),
+            "BadRequest" => BadRequest($"{context} inválido"),
             _ => throw new Exception("Ocorreu um erro no servidor."),
         };
     }

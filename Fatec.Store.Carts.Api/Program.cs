@@ -20,6 +20,7 @@ builder.Services.AddDbContext<AppDbContext>(
 
 builder.Services.AddScoped<ICartsService, CartsService>();
 builder.Services.AddScoped<ICartsRepository, CartsRepository>();
+builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
 builder.Services.AddScoped<IDiscountServiceClient, DiscountServiceClient>();
 builder.Services.AddHttpClient();
 

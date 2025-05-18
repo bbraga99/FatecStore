@@ -14,6 +14,10 @@
 
         public IEnumerable<Product> Products { get; set; }
 
-        public void CalculateTotalAmount() => TotalAmount = Products?.Sum(product => product.Price) ?? decimal.Zero;
+        public void CalculateTotals()
+        {
+            TotalAmount = Products?.Sum(product => product?.Price * product?.Quantity) ?? decimal.Zero;
+            TotalDiscount = decimal.Zero;
+        }
     }
 }

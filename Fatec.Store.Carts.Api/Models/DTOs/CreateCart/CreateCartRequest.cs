@@ -9,7 +9,5 @@
         public decimal TotalAmount { get; set; }
 
         public decimal TotalDiscount { get; set; }
-
-        public IEnumerable<CartProductItem> Products { get; set; }
     }
 }

@@ -5,5 +5,9 @@ namespace Fatec.Store.Carts.Api.Domain.Interfaces.Repositories
     public interface IProductsRepository
     {
         Task RemoveProductsAsync(IEnumerable<Product> products);
+
+        Task AddProductCartAsync(Product product);
+
+        Task UpdateProductAsync(Product product);
     }
 }

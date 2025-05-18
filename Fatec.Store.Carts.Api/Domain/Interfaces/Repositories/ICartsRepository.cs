@@ -9,5 +9,8 @@ namespace Fatec.Store.Carts.Api.Domain.Interfaces.Repositories
         Task UpdateCartAsync(Cart cart);
 
         Task<Cart> GetCartByUserIdAsync(int userId);
+
+        Task<Cart> GetCartByIdAsync(int cartId);
+
     }
 }

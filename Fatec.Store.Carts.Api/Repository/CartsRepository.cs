@@ -15,8 +15,15 @@ namespace Fatec.Store.Carts.Api.Repository
             await _context.SaveChangesAsync();
         }
 
+        public async Task<Cart?> GetCartByIdAsync(int cartId) =>
+            await _context.Carts
+                .Include(cart => cart.Products)
+                .FirstOrDefaultAsync(cart => cart.Id.Equals(cartId));
+
         public async Task<Cart?> GetCartByUserIdAsync(int userId) =>
-             await _context.Carts.FirstOrDefaultAsync(cart => cart.UserId.Equals(userId));
+             await _context.Carts
+                .Include(cart => cart.Products)
+                .FirstOrDefaultAsync(cart => cart.UserId.Equals(userId));
 
         public async Task UpdateCartAsync(Cart cart)
         {
