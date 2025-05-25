@@ -100,6 +100,11 @@ namespace Fatec.Store.Carts.Api.Services
                 return;
 
             await _productsRepository.RemoveProductAsync(product);
+
+            var cart = await _cartsRepository.GetCartByIdAsync(cartId);
+            cart.CalculateTotalAmount();
+
+            await _cartsRepository.UpdateCartAsync(cart);
         }
 
         public async Task CleanCartAsync(int cartId)

@@ -6,6 +6,5 @@ public class Coupon
     public string CouponCode { get; set; }
     public bool Active { get; set; } = true;
     public int Quantity { get; set; }
-    
     public double Discount { get; set; }
 }
