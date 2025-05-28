@@ -3,11 +3,5 @@
     public class CreateCartRequest
     {
         public int UserId { get; set; }
-
-        public string CouponCode { get; set; }
-
-        public decimal TotalAmount { get; set; }
-
-        public decimal TotalDiscount { get; set; }
     }
 }

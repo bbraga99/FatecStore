@@ -1,12 +1,11 @@
 ﻿using Fatec.Store.Products.Api.DTOs;
 using Fatec.Store.Products.Api.DTOs.Mappings;
 using Fatec.Store.Products.Api.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fatec.Store.Products.Api.Controlers;
 
-[Route("api/[controller]")]
+[Route("api/products")]
 [ApiController]
 public class ProductsController : ControllerBase
 {
@@ -58,7 +57,7 @@ public class ProductsController : ControllerBase
         return Ok(productDTO);
     }
 
-    [HttpPatch("update-stock")]
+    [HttpPatch("stock")]
     public async Task<IActionResult> UpdateQuantity([FromBody] UpdateStockRequestDTO updateStockRequestDTO)
     {
         await _productService.UpdateQuantity(updateStockRequestDTO);

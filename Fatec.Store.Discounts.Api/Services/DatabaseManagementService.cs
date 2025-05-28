@@ -7,8 +7,16 @@ namespace Fatec.Store.Discounts.Api.Services
     {
         public static void MigrationInitialisation(IApplicationBuilder app)
         {
-            using var serviceScope = app.ApplicationServices.CreateScope();
-            serviceScope?.ServiceProvider?.GetService<AppDbContext>()?.Database?.Migrate();
+            try
+            {
+                using var serviceScope = app.ApplicationServices.CreateScope();
+                serviceScope?.ServiceProvider?.GetService<AppDbContext>()?.Database?.Migrate();
+            }
+            catch(Exception)
+            {
+                return;
+            }
+
         }
     }
 }
